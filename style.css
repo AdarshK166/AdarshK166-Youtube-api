@@ -1,0 +1,16 @@
+.divcont {
+  display: inline-block;
+  text-align: center;
+  width: 900px;
+  height: 250px;
+  border: 1px solid;
+}
+
+body {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.divcont:first-child img {
+  display: none;
+}

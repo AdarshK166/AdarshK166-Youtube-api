@@ -1,16 +1,36 @@
 .divcont {
-  display: inline-block;
-  text-align: center;
-  width: 900px;
-  height: 250px;
-  border: 1px solid;
+  width: 300px;
+  margin: 0 auto;
+  padding: 3%;
+  border: 1px red;
 }
 
 body {
-  margin-top: 50px;
-  margin-left: 50px;
+  margin-top: 5%;
+  margin-left: 5%;
 }
 
-.divcont:first-child img {
-  display: none;
+#header {
+  text-align: center;
+}
+
+.displayv {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.displayv div {
+  width: 300px;
+  margin: 0 auto;
+  border: 1px solid;
+  padding: 2%;
+  text-align: center;
+}
+
+#frame {
+  margin: 0 auto;
+}
+
+#strongtxt {
+  font-size: xx-large;
 }

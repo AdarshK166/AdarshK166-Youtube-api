@@ -20,11 +20,14 @@ if ($_GET['q'] && $_GET['maxResults']) {
   if ($yt_decode['pageInfo']['totalResults']>0) {
     if (strlen($yt_decode['items'][0]['id']['videoId'])>5) {
         $yt_videoid = trim($yt_decode['items'][0]['id']['videoId']);
+        $yt_videotitle = trim($yt_decode['items'][0]['snippet']['title']);
+        $yt_videoDesc = trim($yt_decode['items'][0]['snippet']['description']);
     }
 }
 
-  $mainFrame .='<iframe width="100%" height="100%" src="https://www.youtube.com/embed/'.$yt_videoid.'" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-	
+  $mainFrame .='<iframe width="90%" height="100%" src="https://www.youtube.com/embed/'.$yt_videoid.'" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  $mainTitle .= '<p><strong>'.$yt_videotitle.'</strong></p>';
+  $mainDesc .= '<p>'.$yt_videoDesc.'</p>';
   
   try {
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
@@ -38,12 +41,13 @@ if ($_GET['q'] && $_GET['maxResults']) {
     foreach ($searchResponse['items'] as $searchResult) {
       switch ($searchResult['id']['kind']) {
         case 'youtube#video':
+         /*
           $videos .= sprintf('<li>%s (%s)</li>', $searchResult['snippet']['title'],
             $searchResult['id']['videoId']."<a href=http://www.youtube.com/watch?v=".$searchResult['id']['videoId']." target=_blank>   Watch This Video</a>");
 			$thumbnail .= sprintf('<img src="http://img.youtube.com/vi/'.$searchResult['id']['videoId'].'/0.jpg"  width="250">');
+      */
       
-      
-      $vHold .= sprintf('<p class="divcont"><img class="imagecont" src="http://img.youtube.com/vi/'.$searchResult['id']['videoId'].'/0.jpg" width="250">'.$searchResult['snippet']['title'].'</p>');
+      $vHold .= sprintf('<div><img src="http://img.youtube.com/vi/'.$searchResult['id']['videoId'].'/0.jpg" width="200px"> '.$searchResult['snippet']['title'].'</div>');
           break;
         case 'youtube#channel':
           $channels .= sprintf('<li>%s (%s)</li>', $searchResult['snippet']['title'],
@@ -63,6 +67,38 @@ if ($_GET['q'] && $_GET['maxResults']) {
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="//www.w3resource.com/includes/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <form action="" method="get">
+    <div id="header">
+      <p>Search Term: <input type="search" id="q" name="q" placeholder="Enter Search Term"></p>
+      <p>Max Results: <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="25"></p>
+      <p><input type="submit" value="Search"></p>
+    </div>
+  </form>
+  <div id="main">
+    <?php echo $mainFrame;?>
+    <?php echo $mainTitle; ?>
+    <?php echo $mainDesc; ?>
+    <div class="displayv">
+      <?php echo $vHold; ?>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
+<!--
 <!doctype html>
 <html>
   <head>
@@ -73,17 +109,16 @@ if ($_GET['q'] && $_GET['maxResults']) {
   </head>
   <body>
     <form method="GET">
-  <div>
-    Search Term: <input type="search" id="q" name="q" placeholder="Enter Search Term">
+    <div id="header">
+        Search Term: <input type="search" id="q" name="q" placeholder="Enter Search Term">
+        Max Results: <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="25">
+    <input type="submit" value="Search">
   </div>
-  <div>
-    Max Results: <input type="number" id="maxResults" name="maxResults" min="1" max="50" step="1" value="25">
-  </div>
-  <input type="submit" value="Search">
-</form>
+  </form>
 <h3>Videos</h3>
     <div>
     <?php echo $mainFrame; ?>
+    
     </div>
     <div class="displayv">
 		<?php echo $vHold; ?>
@@ -91,3 +126,4 @@ if ($_GET['q'] && $_GET['maxResults']) {
 	
 </body>
 </html>
+-->
